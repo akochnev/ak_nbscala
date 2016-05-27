@@ -1,2 +1,11 @@
 language: java
-script: mvn clean install nbm:autoupdate
+script: 
+  - mvn clean install nbm:autoupdate
+  - cd target/netbeans-site && zip *.nbm nbscala-plugins.zip
+deploy:
+  provider: releases
+  api_key: "$GH_TOKEN"
+  file: "target/netbeans-site/nbscala-plugins.zip"
+  skip_cleanup: true
+  on:
+    tags: true
