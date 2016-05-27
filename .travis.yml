@@ -4,8 +4,8 @@ script:
   - cd target/netbeans_site && zip -r nbscala-plugins.zip *.nbm
 deploy:
   provider: releases
-  api_key: "$GH_TOKEN"
-  file: "target/netbeans_site/nbscala-plugins.zip"
+  api_key: "$GH_TOKEN"/home/travis/build/akochnev/nbscala/target/netbeans_site/
+  file: "/home/travis/build/akochnev/nbscala/target/netbeans_site/nbscala-plugins.zip"
   skip_cleanup: true
   on:
     tags: true
