@@ -64,7 +64,7 @@
              we should build it using lower version NetBeans to get it to be able installed both
              on lower and higher version, unless we use un-compatible features of higher version.
         -->
-        <netbeans.version>9.0</netbeans.version>
+        <netbeans.version>RELEASE110</netbeans.version>
 
         <scala.version>2.11.3-nbscala</scala.version> <!-- use nbscala patched scala runtime @see libs.local-->
         <sbt.version>0.13.1</sbt.version>
@@ -89,7 +89,7 @@
         <scala.sbt.project.version>1.8.2.0</scala.sbt.project.version>
         <scala.stdplatform.version>1.8.2.0</scala.stdplatform.version>
         
-        <nb.installation>/Applications/NetBeans/NetBeans 9.0.app/Contents/Resources/NetBeans</nb.installation>
+        <nb.installation>/home/akochnev/Downloads/netbeans-11.1-bin/netbeans</nb.installation>
         <nb.nbmdirectory>${basedir}/nbms</nb.nbmdirectory>
     </properties>
 

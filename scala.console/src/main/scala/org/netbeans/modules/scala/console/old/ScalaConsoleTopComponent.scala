@@ -12,7 +12,9 @@ import javax.swing.text.BadLocationException
 import org.netbeans.api.extexecution.ExecutionDescriptor
 import org.netbeans.api.extexecution.ExecutionService
 import org.netbeans.api.project.ui.OpenProjects
-import org.netbeans.modules.extexecution.base.ExternalProcessBuilder
+//import org.netbeans.modules.extexecution.base.ExternalProcessBuilder
+import org.netbeans.api.extexecution.base.ProcessBuilder
+
 import org.netbeans.modules.scala.console.readline.TextAreaReadline
 import org.openide.ErrorManager
 import org.openide.filesystems.FileUtil
@@ -179,23 +181,29 @@ final class ScalaConsoleTopComponent private () extends TopComponent {
     val out = new PrintWriter(new PrintStream(taReadline))
     val err = new PrintWriter(new PrintStream(taReadline))
 
-    var builder: ExternalProcessBuilder = null
+
+    var builder: ProcessBuilder = ProcessBuilder.getLocal()
     log.info("==== Scala console args ====")
-    for (arg <- scalaArgs) {
-      log.info(arg)
-      if (builder == null) {
-        builder = new ExternalProcessBuilder(arg)
-      } else {
-        builder = builder.addArgument(arg)
-      }
-    }
+    log.info(s"$scalaArgs")
+    import scala.collection.JavaConverters._
+    builder.setArguments(scalaArgs.toList.asJava)
+//    for (arg <- scalaArgs) {
+//      log.info(arg)
+//      if (builder == null) {
+//        builder = ProcessBuilder.getLocal() //new ExternalProcessBuilder(arg)
+//      } else {
+//        builder = builder.addArgument(arg)
+//      }
+//    }
     log.info("==== End of Scala console args ====")
 
     // XXX under Mac OS jdk7, the java.home is point to /Library/Java/JavaVirtualMachines/jdk1.7.0_xx.jdk/Contents/Home/jre
     // instead of /Library/Java/JavaVirtualMachines/jdk1.7.0_xx.jdk/Contents/Home/, which causes the lack of javac
     //builder = builder.addEnvironmentVariable("JAVA_HOME", ScalaExecution.getJavaHome)
-    builder = builder.addEnvironmentVariable("SCALA_HOME", ScalaExecution.getScalaHome)
-    builder = builder.workingDirectory(pwd)
+//    builder = builder.addEnvironmentVariable("SCALA_HOME", ScalaExecution.getScalaHome)
+    builder.getEnvironment().setVariable("SCALA_HOME", ScalaExecution.getScalaHome)
+//    builder = builder.workingDirectory(pwd)
+    builder.setWorkingDirectory(pwd.getAbsolutePath())
 
     var execDescriptor = new ExecutionDescriptor()
       .frontWindow(true).inputVisible(true)
