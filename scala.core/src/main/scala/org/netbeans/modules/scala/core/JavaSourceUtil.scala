@@ -221,11 +221,16 @@ object JavaSourceUtil {
 
   @throws(classOf[IOException])
   def getDocComment(info: CompilationInfo, e: Element): String = {
-    // to resolve javadoc, only needs Phase.ELEMENT_RESOLVED, and we have reached when create info
-    info.getElementUtilities.javaDocFor(e) match {
+    // to resolve javadoc, only needs Phase.ELEMENT_RESOLVED, and we have reached when create infocom.sun.source.util.DocTrees
+    //    info.getEleme
+    //    info.get
+
+    info.getDocTrees().getDocComment(info.getChangedTree) match {
+      //info.getElementUtilities.javaDocFor(e) match {
       case null    => ""
-      case javaDoc => javaDoc.getRawCommentText
+      case javaDoc => javaDoc
     }
+    //    ""
   }
 
   /**

@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>org-netbeans-modules-scala-core</artifactId>
-    <version>${scala.core.version}</version>
+    <version>${scala.core.version}.1</version>
     <name>org-netbeans-modules-scala-core</name>
     <packaging>nbm</packaging>
 

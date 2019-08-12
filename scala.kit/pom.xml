@@ -121,22 +121,55 @@
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>platform</artifactId>
             <type>pom</type>
+
         </dependency>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>java</artifactId>
             <type>pom</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.netbeans.modules</groupId>
+                    <artifactId>org-netbeans-modules-debugger-jpda-truffle</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.netbeans.modules</groupId>
+                    <artifactId>org-netbeans-modules-debugger-jpda-trufflenode</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>nb</artifactId>
             <type>pom</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.netbeans.modules</groupId>
+                    <artifactId>org-netbeans-modules-ko4j-debugging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.netbeans.cluster</groupId>
             <artifactId>ide</artifactId>
             <type>pom</type>
         </dependency>
+        
+<!-- https://mvnrepository.com/artifact/org.netbeans.modules/org-netbeans-lib-nbjavac -->
+<!--<dependency>
+    <groupId>org.netbeans.modules</groupId>
+    <artifactId>org-netbeans-lib-nbjavac</artifactId>
+    <type>pom</type>
+    <version>${netbeans.version}</version>
+</dependency>-->
+<dependency>
+    <groupId>org.netbeans.modules</groupId>
+    <artifactId>org-netbeans-lib-nbjavac</artifactId>
+<!--    <type>pom</type>
+    <version>${netbeans.version}</version>-->
+</dependency>
+
+
 
         <!-- netbeans modules development kit -->
         <!-- @Note we should bypass the transitive dependency on legacy repository:

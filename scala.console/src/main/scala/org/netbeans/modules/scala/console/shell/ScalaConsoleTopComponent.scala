@@ -18,7 +18,8 @@ import org.netbeans.api.extexecution.ExecutionDescriptor
 import org.netbeans.api.extexecution.ExecutionService
 import org.netbeans.api.progress.ProgressHandle
 import org.netbeans.api.project.Project
-import org.netbeans.modules.extexecution.base.ExternalProcessBuilder
+//import org.netbeans.modules.extexecution.base.ExternalProcessBuilder
+import org.netbeans.api.extexecution.ProcessBuilder
 import org.netbeans.modules.scala.core.ScalaExecution
 import org.netbeans.modules.scala.console.AnsiConsoleOutputStream
 import org.netbeans.modules.scala.console.ConsoleInputOutput
@@ -180,9 +181,13 @@ final class ScalaConsoleTopComponent private (project: Project) extends TopCompo
     // XXX under Mac OS jdk7, the java.home is point to /Library/Java/JavaVirtualMachines/jdk1.7.0_xx.jdk/Contents/Home/jre
     // instead of /Library/Java/JavaVirtualMachines/jdk1.7.0_xx.jdk/Contents/Home/, which cause the lack of javac
     //builder = builder.addEnvironmentVariable("JAVA_HOME", SBTExecution.getJavaHome)
-    val builder = args.foldLeft(new ExternalProcessBuilder(executable))(_ addArgument _)
-      .addEnvironmentVariable("SCALA_HOME", ScalaExecution.getScalaHome)
-      .workingDirectory(pwd)
+    val builder = ProcessBuilder.getLocal()
+    import scala.collection.JavaConverters._
+    //val builder = args.foldLeft(new ExternalProcessBuilder(executable))(_ addArgument _)
+    builder.setArguments(args.toList.asJava)
+    //  .addEnvironmentVariable("SCALA_HOME", ScalaExecution.getScalaHome)
+    builder.setEnvironmentVariables(Map("SCALA_HOME" -> ScalaExecution.getScalaHome).asJava)
+    builder.setWorkingDirectory(pwd.getAbsolutePath())
     log.info(args.mkString("==== Scala console args ====\n" + executable + "\n", "\n", "\n==== End of Scala console args ===="))
 
     val pipedIn = new PipedInputStream()

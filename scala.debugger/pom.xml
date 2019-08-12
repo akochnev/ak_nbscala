@@ -133,6 +133,12 @@
             <artifactId>org-netbeans-modules-scala-debugger-projects</artifactId>
         </dependency>
 
+        <!-- netbeans complains -->
+         <dependency>
+            <groupId>org.netbeans.modules</groupId>
+            <artifactId>org-netbeans-modules-java-source-nbjavac</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -64,7 +64,8 @@
              we should build it using lower version NetBeans to get it to be able installed both
              on lower and higher version, unless we use un-compatible features of higher version.
         -->
-        <netbeans.version>RELEASE110</netbeans.version>
+        <!--<netbeans.version>9.0</netbeans.version>-->
+        <netbeans.version>RELEASE111</netbeans.version>
 
         <scala.version>2.11.3-nbscala</scala.version> <!-- use nbscala patched scala runtime @see libs.local-->
         <sbt.version>0.13.1</sbt.version>
@@ -89,7 +90,7 @@
         <scala.sbt.project.version>1.8.2.0</scala.sbt.project.version>
         <scala.stdplatform.version>1.8.2.0</scala.stdplatform.version>
         
-        <nb.installation>/home/akochnev/Downloads/netbeans-11.1-bin/netbeans</nb.installation>
+        <nb.installation>/home/polrtex/Downloads/netbeans-11</nb.installation>
         <nb.nbmdirectory>${basedir}/nbms</nb.nbmdirectory>
     </properties>
 
@@ -260,9 +261,9 @@
     </build>
 
     <profiles>
-        <profile>
-            <!-- The following code includes tools.jar for JDKs on Windows, Linux and Solaris (it is already included in the runtime for Mac OS X and some free JDKs). -->
-            <!-- @see http://maven.apache.org/general.html#tools-jar-dependency -->
+<!--        <profile>
+             The following code includes tools.jar for JDKs on Windows, Linux and Solaris (it is already included in the runtime for Mac OS X and some free JDKs). 
+             @see http://maven.apache.org/general.html#tools-jar-dependency 
             <id>dependency-of-default-tools-jar</id>
             <activation>
                 <property>
@@ -283,13 +284,14 @@
         </profile>
 
         <profile>
-            <!-- The following code includes tools.jar for JDKs on Windows, Linux and Solaris (it is already included in the runtime for Mac OS X and some free JDKs). -->
-            <!-- @see http://maven.apache.org/general.html#tools-jar-dependency -->
+             The following code includes tools.jar for JDKs on Windows, Linux and Solaris (it is already included in the runtime for Mac OS X and some free JDKs). 
+             @see http://maven.apache.org/general.html#tools-jar-dependency 
             <id>dependency-of-default-tools-jar-openjdk</id>
             <activation>
                 <property>
                     <name>java.vendor</name>
-                    <value>Oracle Corporation</value>
+                    <value>AdoptOpenJDK-</value>
+                    <value>Foobar</value>
                 </property>
             </activation>
 
@@ -302,7 +304,7 @@
                     <systemPath>${java.home}/../lib/tools.jar</systemPath>
                 </dependency>
             </dependencies>
-        </profile>
+        </profile>-->
 
         <profile>
             <id>updatesite</id>
@@ -574,6 +576,13 @@
                 <artifactId>org-netbeans-modules-web-browser-api</artifactId>
                 <version>${netbeans.version}</version>
             </dependency>
+<!-- https://mvnrepository.com/artifact/org.netbeans.modules/org-netbeans-lib-nbjavac -->
+<dependency>
+    <groupId>org.netbeans.modules</groupId>
+    <artifactId>org-netbeans-lib-nbjavac</artifactId>
+    <version>${netbeans.version}</version>
+</dependency>
+
 
 
 
