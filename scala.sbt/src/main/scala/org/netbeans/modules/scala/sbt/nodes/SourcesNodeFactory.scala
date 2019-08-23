@@ -18,6 +18,7 @@ class SourcesNodeFactory extends NodeFactory {
 
 object SourcesNodeFactory {
   private class SourcesNodeList(project: Project) extends NodeList[SourceGroup] {
+    private val log = java.util.logging.Logger.getLogger(classOf[SourcesNodeList].getName())
     private val cs = new ChangeSupport(this)
     private lazy val sbtResolver = project.getLookup.lookup(classOf[SBTResolver])
 
@@ -38,6 +39,7 @@ object SourcesNodeFactory {
         def compare(o1: SourceGroup, o2: SourceGroup) = o1.getName.compareTo(o2.getName)
       })
 
+      log.info(s"Returning node keys for sbtResolver $sbtResolver : $theKeys")
       theKeys
     }
 

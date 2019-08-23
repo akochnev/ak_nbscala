@@ -128,7 +128,7 @@ class SBTActionProvider(project: SBTProject) extends ActionProvider {
           val commands = selectProject ::: List(
             //"set fork := false",
             //"set javaOptions := Nil",
-            "run-main " + clazz)
+            "runMain " + clazz)
           SBTConsoleTopComponent.openNewInstance(rootProject, commands, isDebug = false)()
         }
 
@@ -139,7 +139,7 @@ class SBTActionProvider(project: SBTProject) extends ActionProvider {
           val commands = selectProject ::: List(
             //"set fork := true",
             //"set javaOptions := List(\"" + debugOpts(5005) + "\")",
-            "run-main " + clazz)
+            "runMain " + clazz)
           SBTConsoleTopComponent.openNewInstance(rootProject, commands, isDebug = true)()
         }
 
@@ -152,7 +152,7 @@ class SBTActionProvider(project: SBTProject) extends ActionProvider {
       case COMMAND_TEST_ONLY => // TODO
         ProjectManager.getDefault.saveProject(project)
         LifecycleManager.getDefault.saveAll
-        val commands = selectProject ::: List("test-only")
+        val commands = selectProject ::: List("testOnly")
         SBTConsoleTopComponent.openInstance(rootProject, commands, isDebug = false)()
 
       case _ =>

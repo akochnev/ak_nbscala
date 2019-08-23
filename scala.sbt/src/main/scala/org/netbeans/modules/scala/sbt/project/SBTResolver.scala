@@ -40,9 +40,8 @@ case class ProjectContext(
  * @author Caoyuan Deng
  */
 class SBTResolver(project: SBTProject) extends ChangeListener {
+  private val log = java.util.logging.Logger.getLogger(classOf[SBTResolver].getName())
   import SBTResolver._
-
-  private val log = Logger.getLogger(getClass.getName)
 
   private val pcs = new PropertyChangeSupport(this)
   private val projectDir = project.getProjectDirectory
@@ -74,15 +73,18 @@ class SBTResolver(project: SBTProject) extends ChangeListener {
   }
 
   def projectContext = synchronized {
+    log.info("Resolving project context")
     if (_projectContext == null) {
       projectDir.getFileObject(DESCRIPTOR_FILE_NAME) match {
         case null =>
+          log.info(s"Did not find descriptor $DESCRIPTOR_FILE_NAME")
           _isDescriptorFileMissed = true
           dirWatcher.addChangeListener(projectDir, this)
           // set Empty one as soon as possible, so it can be cover by the one get via triggerSbtResolution laster
           _projectContext = EmptyContext
           triggerSbtResolution
         case file =>
+          log.info(s"Found project descriptor $file")
           _isDescriptorFileMissed = false
           dirWatcher.addChangeListener(projectDir, this)
           _projectContext = parseClasspathXml(FileUtil.toFile(file))
@@ -112,6 +114,7 @@ class SBTResolver(project: SBTProject) extends ChangeListener {
   }
 
   private def parseClasspathXml(file: File): ProjectContext = {
+    log.info(s"Parsing classpath xml $file")
     var name: String = null
     var id: String = null
     var mainOutput: File = null
@@ -144,12 +147,14 @@ class SBTResolver(project: SBTProject) extends ChangeListener {
             case entry @ <classpathentry>{ _* }</classpathentry> =>
               (entry \ "@kind").text match {
                 case "src" =>
+                  println(s"Found an src node: $entry")
                   val path1 = (entry \ "@path").text.trim.replace("\\", "/")
                   val path = if (path1.startsWith("multi-jvm")) "src/" + path1 else path1 // TODO
                   val isTest = (entry \ "@scope").text.trim.equalsIgnoreCase("test")
                   val isManaged = (entry \ "@managed").text.trim.equalsIgnoreCase("true")
                   val isDepProject = !((entry \ "@exported") isEmpty)
 
+                  println(s"src node is path1 $path1, path: $path, isTest: $isTest, isManaged:$isManaged, isDepProject: $isDepProject")
                   val srcFo = projectFo.getFileObject(path)
 
                   val output = (entry \ "@output").text.trim.replace("\\", "/") // classes folder
@@ -200,6 +205,7 @@ class SBTResolver(project: SBTProject) extends ChangeListener {
                   }
 
                 case "lib" =>
+                  println(s"found lib node $entry")
                   val path = (entry \ "@path").text.trim.replace("\\", "/")
                   val isTest = (entry \ "@scope").text.trim.equalsIgnoreCase("test")
                   val libFile = new File(path) match {

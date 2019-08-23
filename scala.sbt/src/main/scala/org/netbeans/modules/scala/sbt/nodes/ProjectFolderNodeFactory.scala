@@ -25,10 +25,12 @@ object ProjectFolderNodeFactory {
 
   private class ProjectFolderNodeList(project: Project) extends NodeList[String] {
     private val cs = new ChangeSupport(this)
+    private val log = java.util.logging.Logger.getLogger(classOf[ProjectFolderNodeList].getName())
 
     def keys: java.util.List[String] = {
       val theKeys = new java.util.ArrayList[String]()
       theKeys.add(PROJECT_FOLDER)
+      log.info(s"Project keys are $theKeys")
       theKeys
     }
 

@@ -14,6 +14,7 @@ class SBTProjectOpenedHook(project: Project) extends ProjectOpenedHook {
   private var classpaths: Array[ClassPath] = _
 
   protected def projectOpened() {
+    println("Sbt project opened")
     val cpProvider = project.getLookup.lookup(classOf[SBTClassPathProvider])
     classpaths = Array(
       cpProvider.getClassPath(ClassPath.COMPILE, isTest = false),

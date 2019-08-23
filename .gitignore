@@ -5,6 +5,11 @@ target
 *.log
 *.bak
 *.swp
+*.prefs
+*.classpath
+*.factorypath
+metals.*.db
 *~
 .DS_Store
 nohup.out
+.project

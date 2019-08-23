@@ -15,12 +15,14 @@ import scala.collection.JavaConversions._
  */
 @throws(classOf[IOException])
 class DirWatcher(fileName: String) extends TimerTask {
+  val logger = java.util.logging.Logger.getLogger(getClass().getName())
+
   private val listeners = new EventListenerList()
   private var folders = Set[FileObject]()
 
   protected val NOT_SURE = Long.MinValue
   protected val fileToLastModified = new mutable.HashMap[FileObject, Long]()
-
+  logger.info("Created dir watcher")
   /**
    * Scan all directories to get current files.
    */

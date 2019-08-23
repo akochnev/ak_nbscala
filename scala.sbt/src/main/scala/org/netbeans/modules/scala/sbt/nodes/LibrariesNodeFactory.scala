@@ -26,6 +26,7 @@ object LibrariesNodeFactory {
   private val ICON_LIB_BADGE = ImageUtilities.loadImage("org/netbeans/modules/scala/sbt/resources/libraries-badge.png") //NOI18N
 
   private class LibrariesNodeList(project: Project) extends NodeList[String] {
+    private val log = java.util.logging.Logger.getLogger(classOf[LibrariesNodeList].getName())
     private val cs = new ChangeSupport(this)
 
     def keys: java.util.List[String] = {
@@ -35,6 +36,7 @@ object LibrariesNodeFactory {
       if (addTestSources) {
         theKeys.add(TEST_LIBRARIES)
       }
+      log.info(s"The library keys are $theKeys")
       theKeys
     }
 

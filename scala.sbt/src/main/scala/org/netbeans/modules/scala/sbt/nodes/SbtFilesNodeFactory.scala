@@ -25,10 +25,15 @@ class SbtFileNode(file: FileObject) extends DataNode(DataObject.find(file), Chil
 
 object SbtFilesNodeFactory {
   private class SbtFilesNodeList(project: Project) extends NodeList[FileObject] {
+    private val log = java.util.logging.Logger.getLogger(classOf[SbtFilesNodeList].getName())
     private val cs = new ChangeSupport(this)
 
-    override def keys: java.util.List[FileObject] =
-      project.getProjectDirectory.getChildren.filter(_.hasExt("sbt")).toList
+    override def keys: java.util.List[FileObject] = {
+
+      val sbtKeys = project.getProjectDirectory.getChildren.filter(_.hasExt("sbt")).toList
+      log.info(s"The sbt keys are $sbtKeys")
+      sbtKeys
+    }
 
     override def node(key: FileObject): Node = new SbtFileNode(key)
 
